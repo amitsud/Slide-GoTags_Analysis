@@ -20,8 +20,9 @@ import scanpy as sc
 from matplotlib.colors import LinearSegmentedColormap
 
 # === Step 1: Load Module Scores ===
-module_path = "/n/data2/dfci/medonc/cwu/amit/reference/module_scores/Mouse module_T_PD1 1-14-2025.txt"
+module_path = "path/to/module_score_definitions.txt"  # Replace with your actual file path
 module_scores = pd.read_csv(module_path, delimiter='\t').dropna(how='all')
+
 
 # === Step 2: Subset adata ===
 sample_id = 'mc38_t1_pd1'
