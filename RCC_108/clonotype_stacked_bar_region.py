@@ -1,3 +1,22 @@
+# Author: Amit Sud
+# Date: 1st May 2025
+# Description: This script extracts TCR clonotype information from spatial single-cell data,
+#              computes relative frequencies in two regions (defined by a polygon mask), and
+#              visualizes these as paired stacked bar plots with shaded connections.
+# Input:
+#   - AnnData object (adata_merged_filtered_seurat) with:
+#       - 'sample_id', 'manual_celltype_annotation', 'inside_region',
+#         'TRA_cdr3', 'TRB_cdr3', 'TRA_filtered', 'TRB_filtered' in obs
+# Output:
+#   - PDF files with stacked bar plots of clonotype distributions for TRA and TRB chains
+
+import pandas as pd
+import numpy as np
+import scanpy as sc
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+import matplotlib.patches as mpatches
+
 # ✅ Color mapping based on filtered assignments
 color_map = {
     'Other clonotype': '#FFCCCC',
@@ -20,61 +39,41 @@ group_order = ['NSUN5_specific_TRA', 'NSUN5_specific_TRB', 'Tumor_specific_TRA',
 def extract_tcr_within_polygon(adata, sample_id):
     sample_data = adata[adata.obs['sample_id'] == sample_id].copy()
     sample_data.obs['region_assignment'] = sample_data.obs['inside_region'].map({True: 'Region 1', False: 'Region 2'})
-
-    # ✅ Filter for T-cells only
     t_cell_data = sample_data[sample_data.obs['manual_celltype_annotation'] == 'T-cell']
 
-    # ✅ Extract TCR information
     tcr_df = t_cell_data.obs[['region_assignment', 'TRA_cdr3', 'TRB_cdr3', 'TRA_filtered', 'TRB_filtered']].copy()
-
     for col in ['TRA_cdr3', 'TRB_cdr3', 'TRA_filtered', 'TRB_filtered']:
         tcr_df[col] = tcr_df[col].astype(str).replace('nan', 'None')
-
     return tcr_df
 
-# ✅ Calculate clonotype frequencies with correct within-group ordering
+# ✅ Calculate clonotype frequencies
 def calculate_clonotype_frequencies(tcr_df, chain, filter_col):
-    # Region 1 frequencies
     region1_df = tcr_df[(tcr_df['region_assignment'] == 'Region 1') & (tcr_df[chain] != 'None')]
     region1_counts = region1_df.groupby([chain, filter_col]).size().reset_index(name='count')
     region1_counts['region'] = 'Region 1'
     region1_counts['relative_frequency'] = region1_counts['count'] / region1_counts['count'].sum()
 
-    # Region 2 frequencies (only clonotypes present in Region 1)
     target_clonotypes = region1_df[chain].unique()
     region2_df = tcr_df[(tcr_df['region_assignment'] == 'Region 2') & (tcr_df[chain].isin(target_clonotypes))]
     total_region2_clonotypes = tcr_df[(tcr_df['region_assignment'] == 'Region 2') & (tcr_df[chain] != 'None')].shape[0]
-
     region2_counts = region2_df.groupby([chain, filter_col]).size().reset_index(name='count')
     region2_counts['region'] = 'Region 2'
     region2_counts['relative_frequency'] = region2_counts['count'] / total_region2_clonotypes
 
-    # ✅ Combine counts
     freq_df = pd.concat([region1_counts, region2_counts], ignore_index=True)
     freq_df[filter_col] = pd.Categorical(freq_df[filter_col], categories=group_order, ordered=True)
-
-    # ✅ Sort clonotypes **within each group** by Region 1 frequency (descending)
     freq_df = freq_df.sort_values(by=[filter_col, chain, 'relative_frequency'], ascending=[True, True, False])
-
     return freq_df
 
-# ✅ Plot stacked bar graph with narrower bars and shading
+# ✅ Plot stacked bar graph
 def plot_stacked_bar(freq_df, chain, filter_col, save_pdf=False, pdf_filename="stacked_bar_plot.pdf"):
-    pivot_df = freq_df.pivot_table(
-        index=[chain, filter_col],
-        columns='region',
-        values='relative_frequency',
-        fill_value=0
-    ).reset_index()
-
+    pivot_df = freq_df.pivot_table(index=[chain, filter_col], columns='region', values='relative_frequency', fill_value=0).reset_index()
     pivot_df[filter_col] = pd.Categorical(pivot_df[filter_col], categories=group_order, ordered=True)
     pivot_df = pivot_df.sort_values(by=[filter_col, 'Region 1'], ascending=[True, False])
 
     fig, ax = plt.subplots(figsize=(6, 8))
-
-    # ✅ Bar positions and widths
-    bar_positions = {'Region 1': -0.03, 'Region 2': 0.07}  # Bars closer together
-    bar_width = 0.08  # Narrower bars
+    bar_positions = {'Region 1': -0.03, 'Region 2': 0.07}
+    bar_width = 0.08
     outer_line_width = 2.0
     inner_line_width = 0.7
 
@@ -85,22 +84,18 @@ def plot_stacked_bar(freq_df, chain, filter_col, save_pdf=False, pdf_filename="s
         clonotype = row[chain]
         group = row[filter_col]
         base_color = color_map.get(group, '#D3D3D3')
-        fill_color = lighter_color(base_color, factor=0.6)  # Lighter shading color
+        fill_color = lighter_color(base_color, factor=0.6)
 
         p1, p2 = row['Region 1'], row['Region 2']
-
-        # ✅ Plot bars
         ax.bar(bar_positions['Region 1'], p1, bottom=bottom_r1, width=bar_width, color=base_color,
                edgecolor='black', linewidth=inner_line_width, zorder=3)
         ax.bar(bar_positions['Region 2'], p2, bottom=bottom_r2, width=bar_width, color=base_color,
                edgecolor='black', linewidth=inner_line_width, zorder=3)
 
-        # ✅ Coordinates for shading
         x1_right = bar_positions['Region 1'] + bar_width / 2
         x2_left = bar_positions['Region 2'] - bar_width / 2
         y1_top, y2_top = bottom_r1 + p1, bottom_r2 + p2
 
-        # ✅ Create shaded polygon between bars
         polygon_verts = [
             (x1_right, bottom_r1), (x1_right, y1_top),
             (x2_left, y2_top), (x2_left, bottom_r2), (x1_right, bottom_r1)
@@ -108,25 +103,20 @@ def plot_stacked_bar(freq_df, chain, filter_col, save_pdf=False, pdf_filename="s
         polygon = mpatches.Polygon(polygon_verts, closed=True, facecolor=fill_color, alpha=0.9, edgecolor='none', zorder=1)
         ax.add_patch(polygon)
 
-        # ✅ Save for connecting lines
         lines_data.append(((x1_right, y1_top), (x2_left, y2_top)))
-
         bottom_r1 += p1
         bottom_r2 += p2
 
-    # ✅ Thicker outer outlines
     for region, bottom in zip(['Region 1', 'Region 2'], [bottom_r1, bottom_r2]):
         pos = bar_positions[region]
-        ax.plot([pos - bar_width / 2, pos + bar_width / 2], [0, 0], color='black', linewidth=outer_line_width, zorder=4)  # Bottom
-        ax.plot([pos - bar_width / 2, pos + bar_width / 2], [bottom, bottom], color='black', linewidth=outer_line_width, zorder=4)  # Top
-        ax.plot([pos - bar_width / 2, pos - bar_width / 2], [0, bottom], color='black', linewidth=outer_line_width, zorder=4)  # Left
-        ax.plot([pos + bar_width / 2, pos + bar_width / 2], [0, bottom], color='black', linewidth=outer_line_width, zorder=4)  # Right
+        ax.plot([pos - bar_width / 2, pos + bar_width / 2], [0, 0], color='black', linewidth=outer_line_width, zorder=4)
+        ax.plot([pos - bar_width / 2, pos + bar_width / 2], [bottom, bottom], color='black', linewidth=outer_line_width, zorder=4)
+        ax.plot([pos - bar_width / 2, pos - bar_width / 2], [0, bottom], color='black', linewidth=outer_line_width, zorder=4)
+        ax.plot([pos + bar_width / 2, pos + bar_width / 2], [0, bottom], color='black', linewidth=outer_line_width, zorder=4)
 
-    # ✅ Connecting lines between clonotypes
     for (x1, y1), (x2, y2) in lines_data:
         ax.plot([x1, x2], [y1, y2], color='black', linewidth=0.8, alpha=0.9, zorder=5)
 
-    # ✅ Final plot adjustments
     ax.set_xticks([bar_positions['Region 1'], bar_positions['Region 2']])
     ax.set_xticklabels(['Region 1', 'Region 2'], fontsize=12)
     ax.set_ylabel("Relative Frequency", fontsize=12)
@@ -137,20 +127,15 @@ def plot_stacked_bar(freq_df, chain, filter_col, save_pdf=False, pdf_filename="s
     plt.tight_layout()
 
     if save_pdf:
-        #plt.savefig(pdf_filename, dpi=1200, bbox_inches='tight')
+        # plt.savefig(pdf_filename, dpi=1200, bbox_inches='tight')
         print(f"✅ Plot saved as: {pdf_filename}")
 
-    #plt.show()
-
-# ✅ Usage Example
-
-# Step 1: Extract TCR sequences
+# ✅ Example usage
 tcr_df = extract_tcr_within_polygon(
     adata=adata_merged_filtered_seurat,
-    sample_id='rcc_108_2'
+    sample_id='sample_id_placeholder'
 )
 
-# Step 2: Calculate frequencies and plot
 if tcr_df is not None:
     plot_configs = [
         ('TRA_cdr3', 'TRA_filtered', "stacked_bar_TRA_cdr3_clonotype_distribution.pdf"),
@@ -159,10 +144,4 @@ if tcr_df is not None:
 
     for chain, filter_col, filename in plot_configs:
         freq_df = calculate_clonotype_frequencies(tcr_df, chain, filter_col)
-        plot_stacked_bar(
-            freq_df,
-            chain=chain,
-            filter_col=filter_col,
-            save_pdf=True,
-            pdf_filename=filename
-        )
+        plot_stacked_bar(freq_df, chain=chain, filter_col=filter_col, save_pdf=True, pdf_filename=filename)
