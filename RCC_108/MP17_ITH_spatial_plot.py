@@ -145,3 +145,4 @@ plot_kde_with_polygon_clipping(
     save_pdf=True,
     pdf_filename="MP17_kde_plot_with_clipping.pdf"
 )
+
