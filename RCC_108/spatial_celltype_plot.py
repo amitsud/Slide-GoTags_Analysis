@@ -102,3 +102,4 @@ if 'manual_celltype_annotation' in adata_merged_filtered_seurat.obs and 'sample_
 
 else:
     print("Required columns 'manual_celltype_annotation' or 'sample_id' not found in adata_merged_filtered_seurat.obs.")
+
