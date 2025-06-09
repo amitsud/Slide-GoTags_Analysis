@@ -145,3 +145,4 @@ if tcr_df is not None:
     for chain, filter_col, filename in plot_configs:
         freq_df = calculate_clonotype_frequencies(tcr_df, chain, filter_col)
         plot_stacked_bar(freq_df, chain=chain, filter_col=filter_col, save_pdf=True, pdf_filename=filename)
+        
