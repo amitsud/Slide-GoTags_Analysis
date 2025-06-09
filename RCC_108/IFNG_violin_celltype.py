@@ -69,3 +69,4 @@ plt.ylabel(f'{gene} Expression')
 plt.title(f'{gene} Expression by Cell Type in {sample_id}')
 plt.tight_layout()
 plt.show()
+
