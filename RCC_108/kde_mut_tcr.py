@@ -109,7 +109,6 @@ def plot_final_kde(adata, sample_id, categories, polygon_coords, save_pdf=False,
 
         plt.show()
 
-
 # Example usage (with placeholders)
 plot_final_kde(
     adata=adata_merged_filtered_seurat,
