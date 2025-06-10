@@ -1,1 +1,1 @@
-Scripts for various core analyses in the Slide-GoTags manuscript.
+Scripts for various analyses in the Slide-GoTags manuscript (predominatly implemented in python).
