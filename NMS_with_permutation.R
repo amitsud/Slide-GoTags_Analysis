@@ -1,6 +1,6 @@
 # Title: Calculate Mixing Score Between Cell Types Using Spatial Coordinates
-# Author: [Your Name]
-# Date: [Date]
+# Author: Amit Sud
+# Date: 1st May 2025
 #
 # Description:
 # This script computes a "mixing score" to quantify spatial proximity between two cell types
