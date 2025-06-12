@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: This script generates spatial gene expression plots for specified genes and cell populations,
 #              overlaid with a KDE-defined region based on selected categories of cells. It creates contour
 #              regions using Gaussian KDE and visualizes gene expression with colorbars and scale bar.
