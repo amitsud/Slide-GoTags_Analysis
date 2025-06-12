@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: Generates a spatial plot of annotated cell types from a single-cell dataset (`adata_filtered`)
 #              by rotating spatial coordinates and coloring each cell type using a custom palette.
 #              A custom legend and spatial size scale are added, and the figure is saved as a high-quality PDF.
