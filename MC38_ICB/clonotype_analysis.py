@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: Generates bar plots of TRA and TRB clonotype frequencies from T cells across all samples,
 #              and individually per sample. Highlights specific Rpl18-associated clonotypes using a defined color scheme.
 # Input:
