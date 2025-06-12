@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: This script calculates and compares spatial expression patterns of IFNG and a specified
 #              tumor module (e.g., interferon response) using kernel density estimation (KDE). It visualizes
 #              the spatial overlap and computes Jaccard index, Spearman, and Pearson correlations.
