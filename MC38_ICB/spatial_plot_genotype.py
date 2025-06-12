@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: Generates spatial plots of Rpl18 mutation status and TCR clonotype identity per sample
 #              using annotated single-cell spatial data. Highlights NA, WT, MUT, and specific TCR categories.
 # Input:
