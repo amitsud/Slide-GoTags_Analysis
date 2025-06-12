@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: This script extracts TCR clonotype information from spatial single-cell data,
 #              computes relative frequencies in two regions (defined by a polygon mask), and
 #              visualizes these as paired stacked bar plots with shaded connections.
