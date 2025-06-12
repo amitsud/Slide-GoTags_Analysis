@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: This script performs differential gene expression (DEG) analysis across spatial regions
 #              within each cell type in a single-cell dataset. It highlights genes from selected pathways
 #              and visualizes results as volcano plots with annotations.
