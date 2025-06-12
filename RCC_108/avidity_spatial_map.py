@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: This script visualizes spatial maps of T cells grouped by their NSUN5-specific avidity
 #              (Strong, Weak, or Other) in spatial transcriptomic samples.
 # Input:
