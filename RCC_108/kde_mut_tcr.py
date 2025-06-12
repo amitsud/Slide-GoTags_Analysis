@@ -1,5 +1,4 @@
 # Author: Amit Sud  
-# Date: 1st May 2025  
 # Description: This script generates KDE density maps of spatial transcriptomics data, restricted to selected polygon regions.  
 # It visualizes the spatial distribution of specific cell types (e.g., NSUN5_MUT, NSUN5_specific_TCR) and exports high-resolution plots.  
 # Input:  
