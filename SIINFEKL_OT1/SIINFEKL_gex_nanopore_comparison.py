@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: Compares SIINFEKL_WPRE mutation status derived from gene expression versus Nanopore sequencing.
 #              Filters out NA entries, generates a 2x2 contingency table, and calculates the Phi coefficient
 #              to measure the strength of association.
