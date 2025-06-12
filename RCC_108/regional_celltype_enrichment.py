@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: This script tests for enrichment of annotated cell types in defined spatial regions
 #              using either Fisher’s exact test or the Chi-squared test based on minimum count thresholds.
 #              It calculates odds ratios, log2 fold changes, and p-values for each cell type.
