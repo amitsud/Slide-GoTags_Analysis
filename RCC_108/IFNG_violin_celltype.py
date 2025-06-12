@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: This script visualizes IFNG gene expression across annotated cell types 
 #              in a specific RCC sample using a violin plot.
 # Input:
