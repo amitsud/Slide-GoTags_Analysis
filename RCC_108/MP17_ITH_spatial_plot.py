@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: This script computes module scores for tumor cells across samples,
 #              and plots a kernel density estimate (KDE) of spatial distribution
 #              of the scores, clipped by a user-defined polygon.
