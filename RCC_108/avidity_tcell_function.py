@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: This script calculates module scores (e.g., Exhaustion, Cytotoxicity, Chemokine)
 #              in an AnnData object using provided gene sets, and compares them between groups
 #              defined by NSUN5-specific TCR avidity and spatial localization. It generates violin
