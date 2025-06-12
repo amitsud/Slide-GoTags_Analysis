@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: Visualizes the frequency of TRA and TRB clonotypes in T cells.
 #              Highlights specific clonotypes of interest, and presents counts in side-by-side bar charts.
 # Input:
