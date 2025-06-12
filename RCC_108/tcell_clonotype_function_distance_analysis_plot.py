@@ -1,6 +1,5 @@
 # nearest_distance_module_score_analysis.py
 # Author: Your Name
-# Date: 1st May 2025
 # Description: Computes nearest distances between CD8 T cells and target cells (e.g., NSUN5_MUT),
 # assigns them to categories, calculates module scores, and performs linear regression
 # between distance and score for various clonotypes.
