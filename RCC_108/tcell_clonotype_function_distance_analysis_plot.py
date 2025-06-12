@@ -1,6 +1,6 @@
 # nearest_distance_module_score_analysis.py
 # Author: Your Name
-# Description: Computes nearest distances between CD8 T cells and target cells (e.g., NSUN5_MUT),
+# Description: Computes nearest distances between T cells and target cells (e.g., NSUN5_MUT),
 # assigns them to categories, calculates module scores, and performs linear regression
 # between distance and score for various clonotypes.
 
@@ -23,16 +23,16 @@ for sample in adata.obs['sample_id'].unique():
     print(f"Processing sample: {sample}")
     sample_data = adata[adata.obs['sample_id'] == sample]
 
-    cd8_nsun5_data = sample_data[
-        (sample_data.obs['celltype'].str.contains('CD8 T', case=False, na=False)) &
+    t_nsun5_data = sample_data[
+        (sample_data.obs['celltype'].str.contains('T-cell', case=False, na=False)) &
         (sample_data.obs['TCR_class'] == 'NSUN5_specific_TCR')
     ]
-    cd8_tumor_data = sample_data[
-        (sample_data.obs['celltype'].str.contains('CD8 T', case=False, na=False)) &
+    t_tumor_data = sample_data[
+        (sample_data.obs['celltype'].str.contains('T-cell', case=False, na=False)) &
         (sample_data.obs['TCR_class'] == 'Tumor_specific_TCR')
     ]
-    cd8_other_data = sample_data[
-        (sample_data.obs['celltype'].str.contains('CD8 T', case=False, na=False)) &
+    t_other_data = sample_data[
+        (sample_data.obs['celltype'].str.contains('T-cell', case=False, na=False)) &
         (sample_data.obs['TCR_class'] == 'Other_clonotype_TCR')
     ]
     target_cells = sample_data[sample_data.obs['TCR_class'] == 'Target_Cell_Label']
@@ -42,7 +42,7 @@ for sample in adata.obs['sample_id'].unique():
         continue
 
     for group_data, label, storage_list in zip(
-        [cd8_nsun5_data, cd8_tumor_data, cd8_other_data],
+        [t_nsun5_data, t_tumor_data, t_other_data],
         ['NSUN5_specific_TCR', 'Tumor_specific_TCR', 'Other_clonotype_TCR'],
         [all_combined_data_nsun5, all_combined_data_tumor, all_combined_data_other]
     ):
