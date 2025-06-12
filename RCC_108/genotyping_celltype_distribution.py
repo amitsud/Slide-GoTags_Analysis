@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: This script summarizes cell type distributions across NSUN5 mutant and wild-type genotypes.
 #              It generates separate histograms for each genotype, highlighting tumor cell counts.
 # Input:
