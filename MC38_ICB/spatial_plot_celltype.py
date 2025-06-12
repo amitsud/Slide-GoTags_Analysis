@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: Generates spatial plots of annotated cell types for each sample within an AnnData object.
 #              Applies a consistent color palette and scale bar, and saves high-resolution PDF plots per sample.
 # Input:
