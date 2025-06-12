@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: This script extracts gene lists for the top enriched pathways using g:Profiler.
 #              For each category in a pathway enrichment result dictionary, it retrieves genes
 #              associated with the top N pathways by adjusted p-value.
