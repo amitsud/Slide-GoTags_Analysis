@@ -1,5 +1,4 @@
 # Author: Amit Sud  
-# Date: 1st May 2025  
 # Description: This script calculates module scores in T-cells, computes their distances to Rpl18_MUT tumor cells,
 #              stratifies cells by clonotype and proximity, and visualizes results using a heatmap and scatter plots.
 # Input:
