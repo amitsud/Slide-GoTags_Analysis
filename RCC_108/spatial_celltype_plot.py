@@ -1,5 +1,4 @@
 # Author: Amit Sud  
-# Date: 1st May 2025  
 # Description: This script generates spatial scatter plots of annotated cell types 
 #              from an AnnData object, grouped by sample. It overlays spatial coordinates, 
 #              colors cells by cell type, adds count-based legends, and includes a scale bar.
