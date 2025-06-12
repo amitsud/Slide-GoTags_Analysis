@@ -46,3 +46,4 @@ def calculate_phi(contingency_table):
 # Calculate and print the Phi coefficient
 phi_value = calculate_phi(contingency_table)
 print(f'The Phi coefficient is: {phi_value:.4f}')
+
