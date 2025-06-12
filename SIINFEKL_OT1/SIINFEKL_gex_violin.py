@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: Plots a violin plot showing the normalized expression of the gene SIINFEKL_WPRE across annotated cell types.
 #              It uses raw UMI counts to compute the median expression where the gene is detected, and plots normalized values.
 # Input:
