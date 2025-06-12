@@ -1,7 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: This script maps NSUN5-specific TCR avidity scores (CDR3A and CDR3B) to cells in a spatial
 #              single-cell AnnData object and stratifies T cells into strong/weak categories based on avidity.
 #              It then tests whether low-avidity (strong) TCRs are enriched within a spatial region of interest.
