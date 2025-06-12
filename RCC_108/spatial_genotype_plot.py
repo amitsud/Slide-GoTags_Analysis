@@ -1,5 +1,4 @@
 # Author: Amit Sud  
-# Date: 1st May 2025  
 # Description: This script generates spatial plots for each sample, 
 #              coloring cells by their NSUN5_MUT_TCR classification.
 # Input:
