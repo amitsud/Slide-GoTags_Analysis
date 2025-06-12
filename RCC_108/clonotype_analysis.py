@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: This script visualizes TRA and TRB clonotype frequencies from an AnnData object.
 #              Clonotypes are grouped and colored by antigen specificity (e.g., NSUN5, Tumor).
 #              For each sample, separate bar plots are generated for TRA and TRB CDR3 counts,
