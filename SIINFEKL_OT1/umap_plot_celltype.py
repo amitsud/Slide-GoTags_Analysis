@@ -1,5 +1,4 @@
 # Author: Amit Sud
-# Date: 1st May 2025
 # Description: Reads a UMAP annotation CSV file and generates a UMAP plot of annotated cell types,
 #              mapping detailed cluster labels to broader categories and applying a defined color palette.
 #              The output is a high-resolution PDF showing the spatial distribution of key cell types.
