@@ -1,5 +1,4 @@
 # Author: Amit Sud  
-# Date: 1st May 2025  
 # Description: This script calculates Moran’s I for spatial autocorrelation of module scores in tumor cells across samples.
 # Input:
 #   - AnnData object with tumor cell annotation and spatial coordinates ('x', 'y')
